@@ -2708,7 +2708,7 @@ namespace IMGUIZMO_NAMESPACE
       _freea(faces);
    }
 
-   void DrawGrid(const float* view, const float* projection, const float* matrix, const float gridSize)
+   IMGUI_API void DrawGrid(const float* view, const float* projection, const float* matrix, const float gridSize, const float thick_fac/*=1.0f*/)
    {
       matrix_t viewProjection = *(matrix_t*)view * *(matrix_t*)projection;
       vec_t frustum[6];
@@ -2758,7 +2758,7 @@ namespace IMGUIZMO_NAMESPACE
                thickness = (fmodf(fabsf(f), 10.f) < FLT_EPSILON) ? 1.5f : thickness;
                thickness = (fabsf(f) < FLT_EPSILON) ? 2.3f : thickness;
 
-               gContext.mDrawList->AddLine(worldToPos(ptA, res), worldToPos(ptB, res), col, thickness);
+               gContext.mDrawList->AddLine(worldToPos(ptA, res), worldToPos(ptB, res), col, thickness * thick_fac);
             }
          }
       }
