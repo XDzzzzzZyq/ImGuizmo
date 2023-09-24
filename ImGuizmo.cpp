@@ -2719,8 +2719,8 @@ namespace IMGUIZMO_NAMESPACE
       {
          for (int dir = 0; dir < 2; dir++)
          {
-            vec_t ptA = makeVect(dir ? -gridSize : f, 0.f, dir ? f : -gridSize);
-            vec_t ptB = makeVect(dir ? gridSize : f, 0.f, dir ? f : gridSize);
+            vec_t ptA = makeVect(dir ? -gridSize : f, dir ? f : -gridSize, 0.0f);
+            vec_t ptB = makeVect(dir ? gridSize : f, dir ? f : gridSize, 0.0f);
             bool visible = true;
             for (int i = 0; i < 6; i++)
             {
