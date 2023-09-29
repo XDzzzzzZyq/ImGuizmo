@@ -2502,11 +2502,11 @@ namespace IMGUIZMO_NAMESPACE
      gContext.mPlaneLimit = value;
    }
 
-   bool Manipulate(const float* view, const float* projection, OPERATION operation, MODE mode, float* matrix, float* deltaMatrix, const float* snap, const float* localBounds, const float* boundsSnap)
+   bool Manipulate(const float* view, const float* projection, OPERATION operation, MODE mode, float* matrix, bool* on_hover, bool* on_click, float* deltaMatrix, const float* snap, const float* localBounds, const float* boundsSnap)
    {
       // Scale is always local or matrix will be skewed when applying world scale or oriented matrix
       ComputeContext(view, projection, matrix, (operation & SCALE) ? LOCAL : mode);
-
+      //printf("%u, %u, %u\n", CanActivate(), gContext.mbUsing, gContext.mbUsingBounds);
       // set delta to identity
       if (deltaMatrix)
       {
@@ -2533,7 +2533,7 @@ namespace IMGUIZMO_NAMESPACE
                           HandleRotation(matrix, deltaMatrix, operation, type, snap);
          }
       }
-
+      //printf("%i\n", type);
       if (localBounds && !gContext.mbUsing)
       {
          HandleAndDrawLocalBounds(localBounds, (matrix_t*)matrix, boundsSnap, operation);
@@ -2547,6 +2547,10 @@ namespace IMGUIZMO_NAMESPACE
          DrawScaleGizmo(operation, type);
          DrawScaleUniveralGizmo(operation, type);
       }
+
+      *on_hover = type != MT_NONE;
+      *on_click = gContext.mbUsing;
+
       return manipulated;
    }
 
